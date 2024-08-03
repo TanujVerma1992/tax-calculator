@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+option java_package = "com.grpc.tax.calculator.models";
+option java_multiple_files = true;
+
+message TotalIncomeRequest{
+    double total_income = 1;
+    int32 year = 2;
+}
+message TaxDetailedBifurcation{
+  repeated TaxBifurcation tax_details = 1;
+  double total_tax=2;
+  double in_hand_salary = 3;
+  string tax_against_income = 4;
+  double standard_deduction = 5;
+}
+
+message TaxBifurcation{
+  double startRange = 1;
+  double endRange = 2;
+  double tax = 3;
+  float tax_percentage = 4;
+}
+
+service TaxCalculatorService{
+  rpc calculateTax(TotalIncomeRequest) returns (TaxBifurcation);
+
+  rpc calculateDetailedTax(TotalIncomeRequest) returns (TaxDetailedBifurcation);
+}
